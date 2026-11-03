@@ -1,362 +1,157 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dasbor Analisis Sentimen - Fitur Baru ChatApp</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FDF8F0;
-            color: #4A4A4A;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 450px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
-        }
-        .tab-button {
-            transition: all 0.3s ease;
-        }
-        .tab-button.active {
-            background-color: #A67B5B;
-            color: #FFFFFF;
-            font-weight: 600;
-        }
-        .tab-button:not(.active) {
-            background-color: #EFEAE4;
-            color: #6B4F4F;
-        }
-        .content-card {
-            background-color: #FFFFFF;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            border: 1px solid #EFEAE4;
-        }
-        .flowchart-step {
-            background-color: #EFEAE4;
-            border-radius: 0.5rem;
-            padding: 0.75rem 1rem;
-            text-align: center;
-            font-size: 0.875rem;
-            color: #6B4F4F;
-            font-weight: 500;
-        }
-        .flowchart-arrow {
-            color: #A67B5B;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yanju Gunawan Sihotang – Portfolio</title>
+<style>
+:root{--bg:#f7f8fa;--surface:#fff;--text:#16202e;--muted:#5b6778;--accent:#1f6feb;--accent-soft:#e6efff;--line:#e2e6ec;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1420;--surface:#161e2d;--text:#e8edf5;--muted:#9aa6b8;--accent:#6ea8ff;--accent-soft:#1c2b47;--line:#26314a}}
+:root[data-theme="dark"]{--bg:#0e1420;--surface:#161e2d;--text:#e8edf5;--muted:#9aa6b8;--accent:#6ea8ff;--accent-soft:#1c2b47;--line:#26314a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+nav .wrap{display:flex;gap:18px;padding-top:12px;padding-bottom:12px;overflow-x:auto;white-space:nowrap}
+nav a{color:var(--muted);text-decoration:none;font-size:.92rem}
+nav a:hover{color:var(--accent)}
+header.hero{padding:72px 0 48px}
+.tag{display:inline-block;background:var(--accent-soft);color:var(--accent);padding:4px 12px;border-radius:999px;font-size:.85rem;font-weight:600}
+h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.15;margin:16px 0 12px}
+.lead{font-size:1.1rem;color:var(--muted);max-width:640px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem;border:1px solid var(--accent)}
+.btn.p{background:var(--accent);color:#fff}
+.btn.s{color:var(--accent)}
+section{padding:40px 0;border-top:1px solid var(--line)}
+h2{font-size:1.5rem;margin:0 0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+.card h3{margin:0 0 4px;font-size:1.1rem}
+.meta{color:var(--muted);font-size:.88rem;margin:0 0 10px}
+.card ul{margin:10px 0 0;padding-left:20px}
+.card li{margin-bottom:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{background:var(--accent-soft);color:var(--accent);padding:3px 10px;border-radius:6px;font-size:.82rem;font-weight:600}
+.tl{border-left:2px solid var(--line);padding-left:20px;margin-left:6px}
+.tl .item{position:relative;margin-bottom:28px}
+.tl .item::before{content:"";position:absolute;left:-27px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.tl h3{margin:0;font-size:1.05rem}
+.tl p.meta{margin:2px 0 8px}
+.tl ul{margin:0;padding-left:20px}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.contact a{color:var(--accent);text-decoration:none}
+.contact p{margin:6px 0}
+footer{padding:28px 0 40px;color:var(--muted);font-size:.85rem;text-align:center;border-top:1px solid var(--line)}
+</style>
 </head>
-<body class="antialiased">
+<body>
+<nav><div class="wrap">
+<a href="#about">About</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a>
+</div></nav>
 
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-7xl">
-        
-        <header class="text-center mb-10">
-            <h1 class="text-3xl sm:text-4xl font-bold text-[#6B4F4F] mb-2">Dasbor Analisis Sentimen</h1>
-            <p class="text-lg text-gray-600">Fitur "Pesan Suara Transkripsi Otomatis" di Aplikasi ChatApp</p>
-        </header>
+<main class="wrap">
+<header class="hero" id="about">
+<span class="tag">Informatics Engineering Student · Medan, Indonesia</span>
+<h1>Yanju Gunawan Sihotang</h1>
+<p class="lead">I’m an Informatics Engineering student looking for opportunities in <strong>software development</strong>, <strong>algorithm implementation</strong> and <strong>data-driven applications</strong>, with a background in Python and route-finding research.</p>
+<div class="btns">
+<a class="btn p" href="#projects">View my projects</a>
+<a class="btn s" href="#contact">Get in touch</a>
+</div>
+</header>
 
-        <main>
-            <section id="summary" class="mb-12">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                    <div class="content-card p-6">
-                        <h2 class="text-2xl font-bold text-center mb-4 text-[#6B4F4F]">Ringkasan Sentimen Pengguna</h2>
-                        <div class="chart-container">
-                            <canvas id="sentimentDonutChart"></canvas>
-                        </div>
-                        <p class="text-center text-gray-600 mt-4 text-sm">
-                            Analisis dari 5,000 komentar menunjukkan mayoritas sentimen positif, namun ada ruang signifikan untuk perbaikan berdasarkan masukan pengguna.
-                        </p>
-                    </div>
-                    <div class="flex flex-col gap-6">
-                        <div class="content-card p-6 text-center">
-                             <h3 class="text-lg font-semibold text-gray-700 mb-1">Akurasi Model Analisis</h3>
-                             <p class="text-5xl font-bold text-[#A67B5B]">87.2%</p>
-                             <p class="text-sm text-gray-500 mt-2">Tingkat kepercayaan yang tinggi pada hasil klasifikasi sentimen.</p>
-                        </div>
-                        <div class="content-card p-6">
-                            <h3 class="text-lg font-semibold text-gray-700 mb-3">Temuan Kunci</h3>
-                            <ul class="space-y-2 text-gray-600">
-                                <li class="flex items-start">
-                                    <span class="text-green-500 mr-2 mt-1">▲</span>
-                                    <span><strong class="font-semibold text-gray-800">Penerimaan Positif:</strong> Pengguna menyukai inovasi dan kemudahan aksesibilitas yang ditawarkan.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-red-500 mr-2 mt-1">▼</span>
-                                    <span><strong class="font-semibold text-gray-800">Tantangan Teknis:</strong> Masalah akurasi pada transkripsi dan performa menjadi keluhan utama.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-yellow-500 mr-2 mt-1">●</span>
-                                    <span><strong class="font-semibold text-gray-800">Peluang Perbaikan:</strong> Umpan balik negatif memberikan peta jalan yang jelas untuk peningkatan fitur.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
+<section id="projects">
+<h2>Projects</h2>
+<div class="grid">
+<div class="card">
+<h3>GBFS Emergency Route Finder</h3>
+<p class="meta">Undergraduate thesis · 2026 – Present</p>
+<p>Research on the effectiveness of the Greedy Best First Search algorithm for finding routes to Emergency Installations (IGD) in Kota Medan.</p>
+<ul>
+<li>Tested routes from 5 origin points across Medan to 56 active IGDs from SIRS Online Kemenkes RI.</li>
+<li>Modular Python app with heapq-based GBFS, Haversine heuristic and an OSMnx-compatible road graph.</li>
+<li>Folium interactive maps with animated routes, plus a Tkinter GUI.</li>
+<li>Evaluated computation time, route length and nodes explored, with CSV export of results and step-by-step logs.</li>
+<li>Ranks all 56 IGDs from nearest to farthest, extended with traffic light and traffic density metrics.</li>
+</ul>
+<div class="chips"><span class="chip">Python</span><span class="chip">OSMnx</span><span class="chip">Folium</span><span class="chip">Tkinter</span><span class="chip">GBFS</span></div>
+</div>
+<div class="card">
+<h3>Reporting Website – Disnaker Medan</h3>
+<p class="meta">Internship project · July – August 2025</p>
+<p>A reporting (pelaporan) website for the Dinas Ketenagakerjaan Kota Medan, built during my university internship.</p>
+<ul>
+<li>Developed the site with PHP, HTML and CSS.</li>
+<li>Integrated a MySQL database to store and manage the reporting data.</li>
+</ul>
+<div class="chips"><span class="chip">PHP</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">MySQL</span></div>
+</div>
+</div>
+</section>
 
-            <section id="deep-dive" class="mb-12 content-card p-6 sm:p-8">
-                <h2 class="text-2xl font-bold text-center mb-6 text-[#6B4F4F]">Analisis Mendalam: Suara Pengguna</h2>
-                <div class="flex justify-center mb-6 border-b border-gray-200">
-                    <div class="flex flex-wrap justify-center gap-2">
-                        <button id="tab-positive" class="tab-button px-4 py-2 rounded-t-lg active">Sentimen Positif</button>
-                        <button id="tab-negative" class="tab-button px-4 py-2 rounded-t-lg">Sentimen Negatif</button>
-                        <button id="tab-neutral" class="tab-button px-4 py-2 rounded-t-lg">Sentimen Netral</button>
-                    </div>
-                </div>
+<section id="experience">
+<h2>Experience</h2>
+<div class="tl">
+<div class="item">
+<h3>Web Developer – Internship (PKL)</h3>
+<p class="meta">Dinas Ketenagakerjaan Kota Medan · July 2025 – August 2025</p>
+<ul>
+<li>Designed and developed a website for the agency as part of the university internship program.</li>
+<li>Integrated a MySQL database to store and manage the reporting data.</li>
+</ul>
+</div>
+<div class="item">
+<h3>Field WiFi Technician – Internship (PKL SMK)</h3>
+<p class="meta">PT. Quantum Medan · July 2021 – September 2021</p>
+<ul>
+<li>Installed WiFi internet connections at customers’ homes as a field technician.</li>
+<li>Troubleshot and repaired customers’ home WiFi connections.</li>
+<li>Operated fiber optic tools including fusion splicer, cleaver, fiber optic pigtail, optical power meter and visual fault locator.</li>
+</ul>
+</div>
+</div>
+</section>
 
-                <div id="content-positive" class="tab-content">
-                    <h3 class="font-semibold text-lg text-green-600 mb-3">Pemicu Utama Sentimen Positif</h3>
-                    <p class="text-gray-600 mb-4">Pengguna mengapresiasi fitur ini karena memberikan kemudahan dan solusi praktis dalam komunikasi sehari-hari.</p>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
-                            <p class="font-mono text-sm text-gray-700">"Fitur transkripsi suara ini sangat membantu saat di tempat ramai, jadi bisa baca tanpa harus dengar! Inovasi yang keren dari ChatApp."</p>
-                        </div>
-                        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
-                            <p class="font-mono text-sm text-gray-700">"Akhirnya ada fitur ini! Berguna banget buat yang sering meeting atau di jalan, jadi nggak ketinggalan info penting."</p>
-                        </div>
-                        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
-                             <p class="font-mono text-sm text-gray-700">"Transkripsinya akurat dan cepat, jadi nggak perlu dengerin ulang berkali-kali. Sangat mempermudah!"</p>
-                        </div>
-                    </div>
-                </div>
+<section id="skills">
+<h2>Skills</h2>
+<div class="skills">
+<div class="card"><h3>Hard skills</h3>
+<div class="chips"><span class="chip">Algorithm design &amp; implementation</span><span class="chip">GBFS</span><span class="chip">Route-finding</span><span class="chip">Data analysis</span><span class="chip">Academic research &amp; writing</span></div></div>
+<div class="card"><h3>Soft skills</h3>
+<div class="chips"><span class="chip">Problem solving</span><span class="chip">Logical reasoning</span><span class="chip">Attention to detail</span></div></div>
+<div class="card"><h3>Software</h3>
+<div class="chips"><span class="chip">Python</span><span class="chip">OSMnx</span><span class="chip">Folium</span><span class="chip">Tkinter</span><span class="chip">CSV data handling</span><span class="chip">Microsoft Office</span></div></div>
+</div>
+</section>
 
-                <div id="content-negative" class="tab-content hidden">
-                    <h3 class="font-semibold text-lg text-red-600 mb-3">Pemicu Utama Sentimen Negatif</h3>
-                    <p class="text-gray-600 mb-4">Masalah terkait akurasi, performa teknis, dan isu privasi menjadi keluhan utama yang mengurangi kepuasan pengguna.</p>
-                     <div class="grid md:grid-cols-2 gap-4">
-                        <div class="bg-red-50 p-4 rounded-lg border border-red-200">
-                            <p class="font-mono text-sm text-gray-700">"Transkripsinya sering salah, terutama kalau ada bahasa campur atau logat. Jadi malah bikin bingung."</p>
-                        </div>
-                        <div class="bg-red-50 p-4 rounded-lg border border-red-200">
-                            <p class="font-mono text-sm text-gray-700">"Kadang nggak bisa transkrip sama sekali, cuma muter-muter doang. Bug-nya masih banyak."</p>
-                        </div>
-                         <div class="bg-red-50 p-4 rounded-lg border border-red-200">
-                            <p class="font-mono text-sm text-gray-700">"Agak khawatir sama privasi data suara kalau ditranskrip otomatis begini."</p>
-                        </div>
-                    </div>
-                </div>
+<section id="education">
+<h2>Education &amp; Certification</h2>
+<div class="grid">
+<div class="card">
+<h3>Universitas Methodist Indonesia</h3>
+<p class="meta">Bachelor Degree in Informatics Engineering · Medan · Until 2026</p>
+<p>GPA 3.33/4.00. Undergraduate thesis: <em>Performa Algoritma Greedy Best First Search (GBFS) dalam Pencarian Rute Menuju Instalasi Gawat Darurat (IGD) di Kota Medan</em>.</p>
+</div>
+<div class="card">
+<h3>Junior Web Developer (Pengembang Web Pratama)</h3>
+<p class="meta">BNSP Competency Certification · LSP Informatika · 2026</p>
+<p>Nationally recognized competency certification in web development.</p>
+</div>
+</div>
+</section>
 
-                <div id="content-neutral" class="tab-content hidden">
-                    <h3 class="font-semibold text-lg text-gray-600 mb-3">Komentar Netral</h3>
-                    <p class="text-gray-600 mb-4">Sebagian pengguna memberikan komentar informatif atau pertanyaan, menunjukkan mereka belum membentuk opini yang kuat.</p>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div class="bg-gray-100 p-4 rounded-lg border border-gray-200">
-                            <p class="font-mono text-sm text-gray-700">"Ada fitur transkripsi suara baru di ChatApp, sudah coba?"</p>
-                        </div>
-                        <div class="bg-gray-100 p-4 rounded-lg border border-gray-200">
-                            <p class="font-mono text-sm text-gray-700">"Fitur ini cuma buat pesan suara pendek, kalau panjang nggak bisa."</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="model-performance" class="mb-12 content-card p-6 sm:p-8">
-                 <h2 class="text-2xl font-bold text-center mb-6 text-[#6B4F4F]">Kinerja Model Analisis</h2>
-                 <p class="text-center text-gray-600 mb-6 max-w-3xl mx-auto">Untuk memastikan validitas temuan, model analisis dievaluasi secara ketat. Model menunjukkan kinerja yang kuat, terutama dalam mengidentifikasi sentimen positif, yang memberikan kepercayaan tinggi pada distribusi sentimen secara keseluruhan.</p>
-                 <div class="chart-container" style="max-width: 800px; height: 400px;">
-                    <canvas id="performanceBarChart"></canvas>
-                </div>
-            </section>
-
-            <section id="methodology" class="text-center">
-                 <h2 class="text-2xl font-bold mb-6 text-[#6B4F4F]">Proses Penelitian</h2>
-                 <div class="flex flex-col items-center justify-center space-y-2">
-                    <div class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-                        <div class="flowchart-step">1. Pengumpulan Data (5.000 Komentar)</div>
-                        <div class="flowchart-arrow hidden md:block">→</div>
-                        <div class="flowchart-arrow block md:hidden">↓</div>
-                        <div class="flowchart-step">2. Pra-pemrosesan & Pelabelan Teks</div>
-                        <div class="flowchart-arrow hidden md:block">→</div>
-                         <div class="flowchart-arrow block md:hidden">↓</div>
-                        <div class="flowchart-step">3. Pembobotan Fitur (TF-IDF)</div>
-                    </div>
-                    <div class="flowchart-arrow block">↓</div>
-                    <div class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-                         <div class="flowchart-step">6. Analisis & Interpretasi Hasil</div>
-                         <div class="flowchart-arrow hidden md:block">←</div>
-                         <div class="flowchart-arrow block md:hidden">↓</div>
-                         <div class="flowchart-step">5. Evaluasi Kinerja Model</div>
-                         <div class="flowchart-arrow hidden md:block">←</div>
-                         <div class="flowchart-arrow block md:hidden">↓</div>
-                         <div class="flowchart-step">4. Pelatihan Model SVM</div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer class="text-center mt-12 pt-6 border-t border-gray-200">
-            <p class="text-sm text-gray-500">Dasbor ini dibuat berdasarkan laporan penelitian "Analisis Sentimen Netizen Terhadap Fitur Baru Aplikasi ChatApp Menggunakan Algoritma Support Vector Machine (SVM)".
-            Credit Kelompok Yanju & Adam</p>
-        </footer>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const sentimentData = {
-                labels: ['Positif', 'Negatif', 'Netral'],
-                datasets: [{
-                    label: 'Distribusi Sentimen',
-                    data: [60, 25, 15],
-                    backgroundColor: [
-                        'rgba(76, 175, 80, 0.8)', // Green
-                        'rgba(244, 67, 54, 0.8)',  // Red
-                        'rgba(158, 158, 158, 0.8)' // Grey
-                    ],
-                    borderColor: [
-                        '#FFFFFF',
-                        '#FFFFFF',
-                        '#FFFFFF'
-                    ],
-                    borderWidth: 3,
-                    hoverOffset: 4
-                }]
-            };
-            
-            const performanceData = {
-                labels: ['Positif', 'Negatif', 'Netral'],
-                datasets: [
-                    {
-                        label: 'Presisi (%)',
-                        data: [89.0, 84.0, 85.0],
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Recall (%)',
-                        data: [91.5, 80.0, 82.5],
-                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'F1-Score (%)',
-                        data: [90.2, 82.0, 83.7],
-                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                        borderColor: 'rgba(255, 159, 64, 1)',
-                        borderWidth: 1
-                    }
-                ]
-            };
-
-            const createDonutChart = () => {
-                const ctx = document.getElementById('sentimentDonutChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'doughnut',
-                    data: sentimentData,
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    font: { size: 14 }
-                                }
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        let label = context.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
-                                        if (context.parsed !== null) {
-                                            label += context.parsed + '%';
-                                        }
-                                        return label;
-                                    }
-                                }
-                            }
-                        },
-                        cutout: '60%'
-                    }
-                });
-            };
-
-            const createBarChart = () => {
-                const ctx = document.getElementById('performanceBarChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: performanceData,
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                                labels: {
-                                    font: { size: 14 }
-                                }
-                            },
-                             tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        let label = context.dataset.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
-                                        if (context.parsed.y !== null) {
-                                            label += context.parsed.y + '%';
-                                        }
-                                        return label;
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                max: 100,
-                                ticks: {
-                                    callback: function(value) {
-                                        return value + '%';
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            };
-
-            createDonutChart();
-            createBarChart();
-            
-            const tabs = document.querySelectorAll('.tab-button');
-            const contents = document.querySelectorAll('.tab-content');
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(item => item.classList.remove('active'));
-                    tab.classList.add('active');
-
-                    const targetId = 'content-' + tab.id.split('-')[1];
-                    contents.forEach(content => {
-                        if (content.id === targetId) {
-                            content.classList.remove('hidden');
-                        } else {
-                            content.classList.add('hidden');
-                        }
-                    });
-                });
-            });
-        });
-    </script>
+<section id="contact" class="contact">
+<h2>Contact</h2>
+<p>Open to internships and entry-level roles. Feel free to reach out.</p>
+<p>Email: <a href="mailto:yanjugunawan@gmail.com">yanjugunawan@gmail.com</a></p>
+<p>Phone / WhatsApp: <a href="tel:+6283180705963">083180705963</a></p>
+<p>LinkedIn: <a href="https://linkedin.com/in/yanjugunawan">linkedin.com/in/yanjugunawan</a></p>
+<p>Location: Kota Medan, Sumatera Utara, Indonesia</p>
+</section>
+</main>
+<footer>© 2026 Yanju Gunawan Sihotang</footer>
 </body>
 </html>
